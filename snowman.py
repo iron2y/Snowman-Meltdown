@@ -15,9 +15,19 @@ def play_game():
     print("Secret word selected: " + secret_word)  # for testing, later remove this line
 
     # TODO: Build your game loop here.
-    # For now, simply prompt the user once:
-    guess = input("Guess a letter: ").lower()
-    print("You guessed:", guess)
+    number_of_trials = 3
+    while True:
+        # For now, simply prompt the user once:
+        guess = input("Guess a letter: ").lower()
+        print("You guessed:", guess)
+        if guess in secret_word:
+            print("snowman_full")
+        else:
+            print("snwoman_reduced")
+            number_of_trials -= 1
+            if number_of_trials == 0:
+                print(f"Game Over! The word was: {secret_word}")
+                break
 
 
 if __name__ == "__main__":
