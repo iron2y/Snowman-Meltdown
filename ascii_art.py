@@ -42,9 +42,9 @@ STAGES = [
      /___\\ 
      *°°°*  
     """,
-     # Stage 6: Snowman completely melted
+    # Stage 6: Snowman completely melted
     """
       ___  
      /___\\ 
     """
- ]
+]
