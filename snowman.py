@@ -62,7 +62,7 @@ def display_game_state(mistakes, secret_word, found_letters, state=""):
         print(f"Game Over! The word was: {secret_word}")
         return None
     elif state == "won":
-        print("Congratulations, you saved the snowman!")
+        print(f"Congratulations, you saved the snowman!\nYou guessed the word: {secret_word}")
         return None
     hidden_word = create_word_hint(secret_word, found_letters)
     print(f"Word: {hidden_word}")
@@ -75,10 +75,12 @@ def play_game():
     print("Secret word selected: " + secret_word)  # for testing, later remove this line
 
     mistakes = 0
+    guessed_letters = set()
     found_letters = set()
     while True:
         display_game_state(mistakes, secret_word, found_letters)
         guess = input("\nGuess a letter: ").lower()
+        guessed_letters.add(guess)
         print("You guessed:", guess)  # for testing, later remove this line
         if guess not in secret_word:
             mistakes += 1
@@ -88,6 +90,7 @@ def play_game():
             display_game_state(mistakes, secret_word, found_letters, "lost")
             break
         elif set(secret_word) == found_letters:
+        #elif set(secret_word) == found_letters:
             display_game_state(mistakes, secret_word, found_letters, "won")
             break
 
