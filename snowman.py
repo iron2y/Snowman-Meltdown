@@ -55,18 +55,18 @@ def create_word_hint(secret_word, guessed_letters):
     return " ".join(hidden_word)
 
 
-def display_game_state(mistakes, secret_word, guessed_letters):
+def display_game_state(mistakes, secret_word, guessed_letters, state=""):
     """Displays the current game state."""
     print(STAGES[mistakes])
-    hidden_word = create_word_hint(secret_word, guessed_letters)
-    if mistakes == MAX_NUMBER_OF_MISTAKES:
+    if state == "lost":
         print(f"Game Over! The word was: {secret_word}")
-        return -1
-    if hidden_word.replace(" ", "") == secret_word:
-        print ("You won!")
-        return -1
+        return None
+    elif state == "won":
+        print("You won!")
+        return None
+    hidden_word = create_word_hint(secret_word, guessed_letters)
     print(f"Word: {hidden_word}")
-    return 0
+    return None
 
 
 def play_game():
@@ -79,14 +79,16 @@ def play_game():
     while True:
         display_game_state(mistakes, secret_word, guessed_letters)
         guess = input("\nGuess a letter: ").lower()
-        print("You guessed:", guess)
+        print("You guessed:", guess)  # for testing, later remove this line
         guessed_letters.add(guess)
         if guess not in secret_word:
             mistakes += 1
-        game_state = display_game_state(mistakes, secret_word, guessed_letters)
-        if game_state == -1:
+        if mistakes == MAX_NUMBER_OF_MISTAKES:
+            display_game_state(mistakes, secret_word, guessed_letters, "lost")
             break
-
+        elif set(secret_word) == guessed_letters:
+            display_game_state(mistakes, secret_word, guessed_letters, "won")
+            break
 
 
 if __name__ == "__main__":
