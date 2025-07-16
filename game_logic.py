@@ -1,11 +1,10 @@
 import random
-from encodings.rot_13 import rot13
 
 from ascii_art import STAGES
 
 # List of secret words
 WORDS = ["python", "git", "github", "snowman", "meltdown"]
-MAX_NUMBER_OF_MISTAKES = 3
+MAX_NUMBER_OF_MISTAKES = 6
 
 
 def get_random_word():
@@ -14,7 +13,7 @@ def get_random_word():
 
 
 def create_word_hint(secret_word, guessed_letters):
-    """Creates a word hint based on the secret word."""
+    """Creates a word hint based on the secret word and reveals the letters that have been guessed right."""
     if guessed_letters:
         hidden_word = ""
         for char in secret_word:
@@ -28,7 +27,7 @@ def create_word_hint(secret_word, guessed_letters):
 
 
 def display_game_state(mistakes, secret_word, guessed_letters, state=""):
-    """Displays the current game state."""
+    """Displays the current game state - the word hint and stage of the snowman according to mistakes."""
     print(STAGES[mistakes])
     if state == "lost":
         print(f"\033[33mGame Over! The word was: {secret_word}\033[0m")
@@ -47,10 +46,10 @@ def is_valid_input(guess):
 
 
 def play_game():
+    """Main game loop with game logic, gets input from the user and validates it,
+    calls functions to display the game state."""
     secret_word = get_random_word()
     print("\033[33m\nWelcome to Snowman Meltdown!\033[0m")
-    print("Secret word selected: " + secret_word)  # for testing, later remove this line
-
     mistakes = 0
     guessed_letters = set()
     while True:
@@ -61,7 +60,6 @@ def play_game():
                 break
             else:
                 print("\033[31mInvalid input. Please enter a single letter (a-z or A-Z).\033[0m", end="")
-        print("You guessed:", guess)  # for testing, later remove this line
         if guess not in secret_word:
             mistakes += 1
         else:
