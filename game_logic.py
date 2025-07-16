@@ -39,6 +39,11 @@ def display_game_state(mistakes, secret_word, guessed_letters, state=""):
     return None
 
 
+def is_valid_input(guess):
+    """Checks if the input is a valid letter."""
+    return len(guess) == 1 and guess.isalpha()
+
+
 def play_game():
     secret_word = get_random_word()
     print("Welcome to Snowman Meltdown!")
@@ -48,7 +53,12 @@ def play_game():
     guessed_letters = set()
     while True:
         display_game_state(mistakes, secret_word, guessed_letters)
-        guess = input("\nGuess a letter: ").lower()
+        while True:
+            guess = input("\nGuess a letter: ").lower()
+            if is_valid_input(guess):
+                break
+            else:
+                print("Invalid input. Please enter a single letter (a-z or A-Z).", end="")
         print("You guessed:", guess)  # for testing, later remove this line
         if guess not in secret_word:
             mistakes += 1
