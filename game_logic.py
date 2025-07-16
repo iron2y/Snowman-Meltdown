@@ -48,7 +48,7 @@ def is_valid_input(guess):
 
 def play_game():
     secret_word = get_random_word()
-    print("\033[33mWelcome to Snowman Meltdown!\033[0m")
+    print("\033[33m\nWelcome to Snowman Meltdown!\033[0m")
     print("Secret word selected: " + secret_word)  # for testing, later remove this line
 
     mistakes = 0
@@ -72,3 +72,6 @@ def play_game():
         elif set(secret_word) == guessed_letters:
             display_game_state(mistakes, secret_word, guessed_letters, "won")
             break
+    if input("\033[33m\nEnter r to restart the game: \033[0m").lower() == "r":
+        play_game()
+    return None
