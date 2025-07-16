@@ -41,12 +41,12 @@ def get_random_word():
     return WORDS[random.randint(0, len(WORDS) - 1)]
 
 
-def create_word_hint(secret_word, guessed_letters):
+def create_word_hint(secret_word, found_letters):
     """Creates a word hint based on the secret word."""
-    if guessed_letters:
+    if found_letters:
         hidden_word = ""
         for char in secret_word:
-            if char in guessed_letters:
+            if char in found_letters:
                 hidden_word += char
             else:
                 hidden_word += "_"
@@ -55,16 +55,16 @@ def create_word_hint(secret_word, guessed_letters):
     return " ".join(hidden_word)
 
 
-def display_game_state(mistakes, secret_word, guessed_letters, state=""):
+def display_game_state(mistakes, secret_word, found_letters, state=""):
     """Displays the current game state."""
     print(STAGES[mistakes])
     if state == "lost":
         print(f"Game Over! The word was: {secret_word}")
         return None
     elif state == "won":
-        print("You won!")
+        print("Congratulations, you saved the snowman!")
         return None
-    hidden_word = create_word_hint(secret_word, guessed_letters)
+    hidden_word = create_word_hint(secret_word, found_letters)
     print(f"Word: {hidden_word}")
     return None
 
@@ -75,19 +75,20 @@ def play_game():
     print("Secret word selected: " + secret_word)  # for testing, later remove this line
 
     mistakes = 0
-    guessed_letters = set()
+    found_letters = set()
     while True:
-        display_game_state(mistakes, secret_word, guessed_letters)
+        display_game_state(mistakes, secret_word, found_letters)
         guess = input("\nGuess a letter: ").lower()
         print("You guessed:", guess)  # for testing, later remove this line
-        guessed_letters.add(guess)
         if guess not in secret_word:
             mistakes += 1
+        else:
+            found_letters.add(guess)
         if mistakes == MAX_NUMBER_OF_MISTAKES:
-            display_game_state(mistakes, secret_word, guessed_letters, "lost")
+            display_game_state(mistakes, secret_word, found_letters, "lost")
             break
-        elif set(secret_word) == guessed_letters:
-            display_game_state(mistakes, secret_word, guessed_letters, "won")
+        elif set(secret_word) == found_letters:
+            display_game_state(mistakes, secret_word, found_letters, "won")
             break
 
 
